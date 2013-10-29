@@ -1,0 +1,22 @@
+<service name="recompress">
+  <summary>Change File Compression</summary>
+  <description>This service supports to compress, uncompress or recompress files from or to
+ none : No Compression
+ gz   : Gzip Compression
+ bz2  : Bzip2 Compression
+ xz   : XZ Compression
+</description>
+  <parameter name="compression">
+    <description>Used compression</description>
+    <allowedvalue>none</allowedvalue>
+    <allowedvalue>gz</allowedvalue>
+    <allowedvalue>bz2</allowedvalue>
+    <allowedvalue>xz</allowedvalue>
+    <required/>
+  </parameter>
+  <parameter name="file">
+    <description>name of file to be recompressed. RegExp are allowed.</description>
+    <required/>
+  </parameter>
+</service>
+

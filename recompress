@@ -1,0 +1,99 @@
+#!/bin/bash
+
+# A simple script to checkout or update a svn or git repo as source service
+#  
+# (C) 2010 by Adrian Schröter <adrian@suse.de>
+#  
+# This program is free software; you can redistribute it and/or  
+# modify it under the terms of the GNU General Public License  
+# as published by the Free Software Foundation; either version 2  
+# of the License, or (at your option) any later version.  
+# See http://www.gnu.org/licenses/gpl-2.0.html for full license text.  
+
+# defaults
+MYCOMPRESSION=""
+FILES=""
+
+while test $# -gt 0; do
+  case $1 in
+    *-compression)
+      MYCOMPRESSION="$2"
+      shift
+    ;;
+    *-file)
+      FILES="$FILES ${2##*/}"
+      shift
+    ;;
+    *-outdir)
+      MYOUTDIR="$2"
+      shift
+    ;;
+    *)
+      echo Unknown parameter $1.
+      echo 'Usage: recompress --compression $COMPRESSION --file $FILE --outdir $OUT'
+      exit 1
+    ;;
+  esac
+  shift
+done
+
+if [ -z "$MYCOMPRESSION" ]; then
+  MYCOMPRESSION="bz2"
+fi
+if [ -z "$FILES" ]; then
+  echo "ERROR: no inputs files are given via --file parameter!"
+  exit 1
+fi
+if [ -z "$MYOUTDIR" ]; then
+  echo "ERROR: no output directory is given via --outdir parameter!"
+  exit 1
+fi
+
+for i in $FILES; do
+  FILE=`ls -1 "$i" || ls -1 "_service:*:$i"`
+  if [ ! -f "$FILE" ]; then
+    echo "Unknown file $i"
+    exit 1
+  fi
+  UNCOMPRESS="cat"
+  BASENAME="$FILE"
+  if [ "${FILE%.gz}" != "$FILE" ]; then
+    UNCOMPRESS="gunzip -c"
+    BASENAME="${FILE%.gz}"
+  elif [ "${FILE%.tgz}" != "$FILE" ]; then
+    UNCOMPRESS="gunzip -c"
+    BASENAME="${FILE%.tgz}.tar"
+  elif [ "${FILE%.bz2}" != "$FILE" ]; then
+    UNCOMPRESS="bunzip2 -c"
+    BASENAME="${FILE%.bz2}"
+  elif [ "${FILE%.xz}" != "$FILE" ]; then
+    UNCOMPRESS="xz -dc"
+    BASENAME="${FILE%.xz}"
+  fi
+
+  if [ "$MYCOMPRESSION" == "gz" ]; then
+    COMPRESS="gzip -c -n --rsyncable -"
+    NEWFILE="${BASENAME#_service:}.gz"
+  elif [ "$MYCOMPRESSION" == "bz2" ]; then
+    COMPRESS="bzip2 -c -"
+    NEWFILE="${BASENAME#_service:}.bz2"
+  elif [ "$MYCOMPRESSION" == "xz" ]; then
+    COMPRESS="xz -c -"
+    NEWFILE="${BASENAME#_service:}.xz"
+  elif [ "$MYCOMPRESSION" == "none" ]; then
+    COMPRESS="cat -"
+    NEWFILE="${BASENAME#_service:}"
+  else
+    echo "ERROR: Unknown compression $MYCOMPRESSION"
+    exit 1
+  fi
+
+  # do the real work
+  $UNCOMPRESS "$FILE" | $COMPRESS > "$MYOUTDIR/$NEWFILE" || exit 1
+  echo "Compressed $FILE to $NEWFILE"
+
+  # we can remove service files, no need to store them twice
+  rm -f "$FILE"
+done
+
+exit 0
