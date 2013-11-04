@@ -90,7 +90,29 @@ for i in $FILES; do
 
   # do the real work
   $UNCOMPRESS "$FILE" | $COMPRESS > "$MYOUTDIR/$NEWFILE" || exit 1
-  echo "Compressed $FILE to $NEWFILE"
+
+  # Check if the (compressed) target file already exists in the directory where
+  # the service is invoked and drop the newly generated one. Avoids overwriting
+  # otherwise identical files which only have different timestamps. Note that
+  # zdiff and co all fail to do that properly...
+  if [ -f $NEWFILE ] ; then
+    DIFF_TMPDIR=$(mktemp -d)
+    SRC_DIR="$PWD"
+    cd $DIFF_TMPDIR
+    mkdir new old
+    $(cd new ; tar -xxf "$MYOUTDIR/$NEWFILE")
+    $(cd old ; tar -xxf "$SRC_DIR/$NEWFILE")
+    if diff -r new old > /dev/null ; then
+      echo "Identical target file $NEWFILE already exists, skipping.."
+      rm -r "$MYOUTDIR/$NEWFILE"
+    else
+      echo "Compressed $FILE to $NEWFILE"
+    fi
+    cd $SRC_DIR
+    rm -r $DIFF_TMPDIR
+  else
+    echo "Compressed $FILE to $NEWFILE"
+  fi
 
   # we can remove service files, no need to store them twice
   rm -f "$FILE"
