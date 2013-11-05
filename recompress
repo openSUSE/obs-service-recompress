@@ -101,7 +101,7 @@ for i in $FILES; do
     cd $DIFF_TMPDIR
     mkdir new old
     $(cd new ; tar -xxf "$MYOUTDIR/$NEWFILE" 2> /dev/null || mv "$MYOUTDIR/$NEWFILE" .)
-    $(cd old ; tar -xxf "$SRC_DIR/$NEWFILE" 2> /dev/null || mv "$MYOUTDIR/$NEWFILE" .)
+    $(cd old ; tar -xxf "$SRC_DIR/$NEWFILE" 2> /dev/null || mv "$SRC_DIR/$NEWFILE" .)
     if diff -r new old > /dev/null ; then
       echo "Identical target file $NEWFILE already exists, skipping.."
       rm -r "$MYOUTDIR/$NEWFILE"
