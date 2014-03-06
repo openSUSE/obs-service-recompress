@@ -84,7 +84,7 @@ for i in $FILES; do
     COMPRESS="cat -"
     NEWFILE="${BASENAME#_service:}"
   else
-    echo "ERROR: Unknown compression $MYCOMPRESSION"
+    echo "ERROR: Unknown compression"
     exit 1
   fi
 
