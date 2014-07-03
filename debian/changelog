@@ -1,0 +1,5 @@
+obs-service-recompress (0.3.1) unstable; urgency=low
+
+  * Initial release
+
+ -- Daniel Gollub <dgollub@brocade.com>  Sun, 18 May 2014 17:17:28 +0200

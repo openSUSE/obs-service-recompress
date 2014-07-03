@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+#
+export DH_VERBOSE=1
+DESTDIR=debian/obs-service-recompress
+
+%:
+	dh $@ 
+
+override_dh_auto_install:
+	dh_auto_install
+	mkdir -p $(DESTDIR)/usr/lib/obs/service
+	install -m 0755 recompress $(DESTDIR)/usr/lib/obs/service
+	install -m 0644 recompress.service $(DESTDIR)/usr/lib/obs/service

@@ -1,0 +1,18 @@
+Source: obs-service-recompress
+Section: devel
+Priority: extra
+Maintainer: Daniel Gollub <dgollub@brocade.com>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.3
+Homepage: https://build.opensuse.org/package/show/openSUSE:Tools/obs-service-recompress
+
+Package: obs-service-recompress
+Architecture: all
+Depends: ${misc:Depends}, bzip2, gzip, xz-utils
+Description: An OBS source service: Recompress files
+ This is a source service for openSUSE Build Service.
+ It supports to compress, uncompress or recompress files from or to
+  none : No Compression
+  gz   : Gzip Compression
+  bz2  : Bzip2 Compression
+  xz   : XZ Compression
