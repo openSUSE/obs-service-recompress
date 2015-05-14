@@ -109,7 +109,7 @@ for i in $FILES; do
       echo "Compressed $FILE to $NEWFILE"
     fi
     cd $SRC_DIR
-    rm -r $DIFF_TMPDIR
+    rm -rf $DIFF_TMPDIR
   else
     echo "Compressed $FILE to $NEWFILE"
   fi
