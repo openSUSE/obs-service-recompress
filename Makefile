@@ -9,4 +9,7 @@ install:
 	install -m 0755 recompress $(DESTDIR)$(servicedir)
 	install -m 0644 recompress.service $(DESTDIR)$(servicedir)
 
-.PHONY: all install
+test:
+	prove t/*.t
+
+.PHONY: all install test

@@ -89,7 +89,7 @@ for i in $FILES; do
   fi
 
   # do the real work
-  $UNCOMPRESS "$FILE" | $COMPRESS > "$MYOUTDIR/$NEWFILE" || exit 1
+  $UNCOMPRESS -- "$FILE" | $COMPRESS > "$MYOUTDIR/$NEWFILE" || exit 1
 
   # Check if the (compressed) target file already exists in the directory where
   # the service is invoked and drop the newly generated one. Avoids overwriting
@@ -100,22 +100,22 @@ for i in $FILES; do
     SRC_DIR="$PWD"
     cd $DIFF_TMPDIR
     mkdir new old
-    $(cd new ; tar -xxf "$MYOUTDIR/$NEWFILE" 2> /dev/null || mv "$MYOUTDIR/$NEWFILE" .)
-    $(cd old ; tar -xxf "$SRC_DIR/$NEWFILE" 2> /dev/null || mv "$SRC_DIR/$NEWFILE" .)
+    $(cd new ; tar -xf "$MYOUTDIR/$NEWFILE" 2> /dev/null || mv -- "$MYOUTDIR/$NEWFILE" .)
+    $(cd old ; tar -xf "$SRC_DIR/$NEWFILE" 2> /dev/null || mv -- "$SRC_DIR/$NEWFILE" .)
     if diff -r new old > /dev/null ; then
       echo "Identical target file $NEWFILE already exists, skipping.."
-      rm -r "$MYOUTDIR/$NEWFILE"
+      rm -r -- "$MYOUTDIR/$NEWFILE"
     else
       echo "Compressed $FILE to $NEWFILE"
     fi
     cd $SRC_DIR
-    rm -rf $DIFF_TMPDIR
+    rm -rf -- "$DIFF_TMPDIR"
   else
     echo "Compressed $FILE to $NEWFILE"
   fi
 
   # we can remove service files, no need to store them twice
-  rm -f "$FILE"
+  rm -f -- "$FILE"
 done
 
 exit 0
