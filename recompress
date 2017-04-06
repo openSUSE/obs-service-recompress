@@ -78,7 +78,7 @@ for i in $FILES; do
     COMPRESS="bzip2 -c -"
     NEWFILE="${BASENAME#_service:}.bz2"
   elif [ "$MYCOMPRESSION" == "xz" ]; then
-    COMPRESS="xz -c -"
+    COMPRESS="xz --threads=$(nproc) -c -"
     NEWFILE="${BASENAME#_service:}.xz"
   elif [ "$MYCOMPRESSION" == "none" ]; then
     COMPRESS="cat -"
