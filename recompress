@@ -50,7 +50,7 @@ if [ -z "$MYOUTDIR" ]; then
 fi
 
 for i in $FILES; do
-  FILE=`ls -1 "$i" || ls -1 "_service:*:$i"`
+  FILE=`ls -1 "$(eval echo $i)" || ls -1 "$(eval echo _service:*:$i)"`
   if [ ! -f "$FILE" ]; then
     echo "Unknown file $i"
     exit 1
