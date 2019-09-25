@@ -13,6 +13,7 @@
 # defaults
 MYCOMPRESSION=""
 FILES=""
+MYSUBDIR=""
 
 while test $# -gt 0; do
   case $1 in
@@ -28,9 +29,13 @@ while test $# -gt 0; do
       MYOUTDIR="$2"
       shift
     ;;
+    *-subdir)
+      MYSUBDIR="$2"
+      shift
+    ;;
     *)
       echo Unknown parameter $1.
-      echo 'Usage: recompress --compression $COMPRESSION --file $FILE --outdir $OUT'
+      echo 'Usage: recompress --compression $COMPRESSION --file $FILE [--subdir $SUBDIR] --outdir $OUT'
       exit 1
     ;;
   esac
@@ -86,6 +91,12 @@ for i in $FILES; do
   else
     echo "ERROR: Unknown compression"
     exit 1
+  fi
+
+  if [ -n "$MYSUBDIR" ]; then
+    # create a new top-level directory inside the archive
+    mkdir -p "$MYOUTDIR/$MYSUBDIR"
+    NEWFILE="$MYSUBDIR/$NEWFILE"
   fi
 
   # do the real work
