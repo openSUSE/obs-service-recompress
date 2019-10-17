@@ -18,5 +18,10 @@
     <description>name of file to be recompressed. RegExp are allowed.</description>
     <required/>
   </parameter>
+  <parameter name="keep">
+    <description>Don't delete the input file.</description>
+    <allowedvalue>enable</allowedvalue>
+    <allowedvalue>disable</allowedvalue>
+  </parameter>
 </service>
 
