@@ -5,6 +5,7 @@
  gz   : Gzip Compression
  bz2  : Bzip2 Compression
  xz   : XZ Compression
+ zstd : Zstd Compression
 </description>
   <parameter name="compression">
     <description>Used compression</description>
@@ -12,6 +13,7 @@
     <allowedvalue>gz</allowedvalue>
     <allowedvalue>bz2</allowedvalue>
     <allowedvalue>xz</allowedvalue>
+    <allowedvalue>zstd</allowedvalue>
     <required/>
   </parameter>
   <parameter name="file">

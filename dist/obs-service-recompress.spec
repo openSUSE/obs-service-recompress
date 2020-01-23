@@ -29,7 +29,7 @@ Source:         %{name}-%{version}.tar.gz
 Requires:       bzip2
 Requires:       gzip
 Requires:       xz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Requires:       zstd
 BuildArch:      noarch
 
 %description
@@ -41,6 +41,7 @@ It supports to compress, uncompress or recompress files from or to
  gz   : Gzip Compression
  bz2  : Bzip2 Compression
  xz   : XZ Compression
+ zstd : Zstd Compression
 
 
 %prep

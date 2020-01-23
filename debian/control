@@ -8,7 +8,7 @@ Homepage: https://build.opensuse.org/package/show/openSUSE:Tools/obs-service-rec
 
 Package: obs-service-recompress
 Architecture: all
-Depends: ${misc:Depends}, bzip2, gzip, xz-utils
+Depends: ${misc:Depends}, bzip2, gzip, xz-utils, zstd
 Description: An OBS source service: Recompress files
  This is a source service for openSUSE Build Service.
  It supports to compress, uncompress or recompress files from or to
@@ -16,3 +16,4 @@ Description: An OBS source service: Recompress files
   gz   : Gzip Compression
   bz2  : Bzip2 Compression
   xz   : XZ Compression
+  zstd : Zstd Compression

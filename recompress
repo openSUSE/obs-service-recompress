@@ -69,6 +69,9 @@ for i in $FILES; do
   elif [ "${FILE%.xz}" != "$FILE" ]; then
     UNCOMPRESS="xz -dc"
     BASENAME="${FILE%.xz}"
+  elif [ "${FILE%.zst}" != "$FILE" ]; then
+    UNCOMPRESS="zstdcat"
+    BASENAME="${FILE%.zst}"
   fi
 
   if [ "$MYCOMPRESSION" == "gz" ]; then
@@ -80,6 +83,9 @@ for i in $FILES; do
   elif [ "$MYCOMPRESSION" == "xz" ]; then
     COMPRESS="xz -c -"
     NEWFILE="${BASENAME#_service:}.xz"
+  elif [ "$MYCOMPRESSION" == "zstd" -o "$MYCOMPRESSION" == "zst" ]; then
+    COMPRESS="zstd -c -"
+    NEWFILE="${BASENAME#_service:}.zst"
   elif [ "$MYCOMPRESSION" == "none" ]; then
     COMPRESS="cat -"
     NEWFILE="${BASENAME#_service:}"

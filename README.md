@@ -6,6 +6,7 @@ This is an [Open Build Service](http://openbuildservice.org/) source service. It
 * gz   : Gzip Compression
 * bz2  : Bzip2 Compression
 * xz   : XZ Compression
+* zstd : Zstd Compression
 
 This is the git repository for [openSUSE:Tools/obs-service-recompress](https://build.opensuse.org/package/show/openSUSE:Tools/obs-service-recompress). The authoritative source is https://github.com/openSUSE/obs-service-recompress
 

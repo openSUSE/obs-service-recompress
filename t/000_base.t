@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use FindBin;
-use Test::More tests => 8;
+use Test::More tests => 10;
 use File::Copy;
 use Data::Dumper;
 
@@ -22,9 +22,10 @@ copy("$data_dir/$test_file","$in_dir/$test_file");
 # none		gz
 # gz		bz2
 # bz2		xz
-# xz 		none
+# xz 		zst
+# zst 		none
 
-for my $tc (qw/ gz bz2 xz none/ ) {
+for my $tc (qw/ gz bz2 xz zst none/ ) {
 
 	my $in_file = "$test_file".( ($last_ext) ? ".$last_ext" : '' );
 	my $out_file = "$temp_dir/$test_file".( ($tc ne 'none') ? ".$tc" : '' );
