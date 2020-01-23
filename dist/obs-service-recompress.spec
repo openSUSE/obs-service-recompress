@@ -1,7 +1,7 @@
 #
 # spec file for package obs-service-recompress
 #
-# Copyright (c) 2016 SUSE LINUX GmbH, Nuernberg, Germany.
+# Copyright (c) 2020 SUSE LINUX GmbH, Nuernberg, Germany.
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -12,20 +12,24 @@
 # license that conforms to the Open Source Definition (Version 1.9)
 # published by the Open Source Initiative.
 
-# Please submit bugfixes or comments via http://bugs.opensuse.org/
+# Please submit bugfixes or comments via https://bugs.opensuse.org/
 #
 
 
 %define service recompress
 
 Name:           obs-service-%{service}
-Version:        0.3.1+git20160217.7897d3f
+Version:        0.4.0+git20200123.946b23f
 Release:        0
 Summary:        An OBS source service: Recompress files
-License:        GPL-2.0+
+License:        GPL-2.0-or-later
 Group:          Development/Tools/Building
 Url:            https://github.com/openSUSE/obs-service-%{service}
 Source:         %{name}-%{version}.tar.gz
+BuildRequires:  bzip2
+BuildRequires:  gzip
+BuildRequires:  xz
+BuildRequires:  zstd
 Requires:       bzip2
 Requires:       gzip
 Requires:       xz
@@ -51,6 +55,9 @@ It supports to compress, uncompress or recompress files from or to
 
 %install
 %makeinstall
+
+%check
+make test
 
 %files
 %defattr(-,root,root)
