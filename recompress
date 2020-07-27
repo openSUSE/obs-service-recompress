@@ -112,7 +112,7 @@ for i in $FILES; do
     mkdir new old
     $(cd new ; tar -xf "$MYOUTDIR/$NEWFILE" 2> /dev/null || mv -- "$MYOUTDIR/$NEWFILE" .)
     $(cd old ; tar -xf "$SRC_DIR/$NEWFILE" 2> /dev/null || mv -- "$SRC_DIR/$NEWFILE" .)
-    if diff -r new old > /dev/null ; then
+    if diff -r --no-dereference new old > /dev/null ; then
       echo "Identical target file $NEWFILE already exists, skipping.."
       rm -r -- "$MYOUTDIR/$NEWFILE"
     else
