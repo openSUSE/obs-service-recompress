@@ -52,9 +52,6 @@ if [ -z "$MYOUTDIR" ]; then
   echo "ERROR: no output directory is given via --outdir parameter!"
   exit 1
 fi
-if [ -z "$KEEP" ]; then
-  KEEP="disable"
-fi
 
 for i in $FILES; do
   FILE=`ls -1 "$i" || ls -1 "_service:*:$i"`
@@ -127,9 +124,9 @@ for i in $FILES; do
     echo "Compressed $FILE to $NEWFILE"
   fi
 
-  # we can remove service files, no need to store them twice
-  if [ "$KEEP" == "disable" ]; then
-    rm -f -- "$FILE"
+  # remove uncompressed file
+  if [ "$KEEP" != "enable" ]; then
+    rm -f -- "$FILE" || exit 1
   fi
 done
 
