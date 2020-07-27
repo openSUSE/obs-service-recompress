@@ -61,6 +61,7 @@ make test
 
 %files
 %defattr(-,root,root)
+%license COPYING
 %dir %{_prefix}/lib/obs
 %{_prefix}/lib/obs/service
 
