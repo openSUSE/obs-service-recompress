@@ -85,6 +85,8 @@ for i in $FILES; do
     COMPRESS="bzip2 -c -"
     NEWFILE="${BASENAME#_service:}.bz2"
   elif [ "$MYCOMPRESSION" == "xz" ]; then
+    # --threads=0 should be used, but it is reported to create non deterministic output
+    # https://github.com/openSUSE/obs-service-recompress/pull/17
     COMPRESS="xz --threads=$(n=$(nproc); [[ $n > 1 ]] || n=2; echo $n) -c -"
     NEWFILE="${BASENAME#_service:}.xz"
   elif [ "$MYCOMPRESSION" == "zstd" -o "$MYCOMPRESSION" == "zst" ]; then
