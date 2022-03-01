@@ -32,11 +32,12 @@ BuildRequires:  perl(Test::More)
 BuildRequires:  bzip2
 BuildRequires:  gzip
 BuildRequires:  xz
+BuildRequires:  perl(Test::More)
+Requires:       %{_bindir}/gzip
 Requires:       bzip2
-Requires:       gzip
 Requires:       xz
 
-%if 0%{?suse_version} > 1500 || 0%{?sle_version} > 150000 || 0%{?fedora_version} > 25 || 0%{?rhel} >= 6
+%if 0%{?suse_version} > 1500 || 0%{?sle_version} > 150000 || 0%{?fedora_version} > 25
 BuildRequires:  zstd
 Requires:       zstd
 %endif
