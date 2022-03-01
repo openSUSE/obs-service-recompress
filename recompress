@@ -90,7 +90,7 @@ for i in $FILES; do
     COMPRESS="xz --threads=$(n=$(nproc); [[ $n > 1 ]] || n=2; echo $n) -c -"
     NEWFILE="${BASENAME#_service:}.xz"
   elif [ "$MYCOMPRESSION" == "zstd" -o "$MYCOMPRESSION" == "zst" ]; then
-    COMPRESS="zstd --threads=0 -c -"
+    COMPRESS="zstd --rsyncable -15 --threads=0 -c -"
     NEWFILE="${BASENAME#_service:}.zst"
   elif [ "$MYCOMPRESSION" == "none" ]; then
     COMPRESS="cat -"
