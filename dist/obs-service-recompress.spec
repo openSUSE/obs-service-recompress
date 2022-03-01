@@ -25,6 +25,7 @@ Summary:        An OBS source service: Recompress files
 License:        GPL-2.0-or-later
 Group:          Development/Tools/Building
 URL:            https://github.com/openSUSE/obs-service-%{service}
+BuildRoot:      %_tmppath/%name-%version-build
 Source:         %{name}-%{version}.tar.gz
 BuildRequires:  perl(Test::More)
 
